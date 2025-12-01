@@ -28,7 +28,7 @@ fn move_dial(mut dial: i32, operation: &str) -> i32 {
         "L" => dial -= steps,
         "R" => dial += steps,
         _ => panic!(),
-    };
+    }
     while dial > 99 {
         dial -= 100;
     }
