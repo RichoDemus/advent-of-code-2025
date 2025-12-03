@@ -12,6 +12,7 @@ fn part1(input: &str) -> usize {
 
 #[cfg(test)]
 mod tests {
+    use super::*;
     // #[test]
     // fn verify_part1() {
     //     let _ = tracing_subscriber::fmt()
