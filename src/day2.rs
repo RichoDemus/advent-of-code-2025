@@ -3,11 +3,20 @@ use tracing::info;
 
 #[aoc(day2, part1)]
 fn part1(input: &str) -> usize {
-    input.trim().split(',')
-        .flat_map(|range|{
-            let (start, end):(usize, usize) = match range.split('-').collect::<Vec<_>>().as_slice() {
-                [start, end] => (start.parse().unwrap_or_else(|_|panic!("Can't parse start {start}")),end.parse().unwrap_or_else(|_|panic!("Can't parse end {end}"))),
-                _ => panic!()
+    input
+        .trim()
+        .split(',')
+        .flat_map(|range| {
+            let (start, end): (usize, usize) = match range.split('-').collect::<Vec<_>>().as_slice()
+            {
+                [start, end] => (
+                    start
+                        .parse()
+                        .unwrap_or_else(|_| panic!("Can't parse start {start}")),
+                    end.parse()
+                        .unwrap_or_else(|_| panic!("Can't parse end {end}")),
+                ),
+                _ => panic!(),
             };
             start..=end
         })
@@ -20,26 +29,34 @@ fn is_invalid(number: usize) -> bool {
     info!("{number}");
     if !number.len().is_multiple_of(2) {
         info!("\todd..");
-        return false
+        return false;
     }
     let mid = number.len() / 2;
     for i in 0..(mid) {
-        if number.chars().nth(i).unwrap() != number.chars().nth(mid+i).unwrap() {
-            return false
+        if number.chars().nth(i).unwrap() != number.chars().nth(mid + i).unwrap() {
+            return false;
         }
     }
 
     true
 }
 
-
 #[aoc(day2, part2)]
 fn part2(input: &str) -> usize {
-    input.trim().split(',')
-        .flat_map(|range|{
-            let (start, end):(usize, usize) = match range.split('-').collect::<Vec<_>>().as_slice() {
-                [start, end] => (start.parse().unwrap_or_else(|_|panic!("Can't parse start {start}")),end.parse().unwrap_or_else(|_|panic!("Can't parse end {end}"))),
-                _ => panic!()
+    input
+        .trim()
+        .split(',')
+        .flat_map(|range| {
+            let (start, end): (usize, usize) = match range.split('-').collect::<Vec<_>>().as_slice()
+            {
+                [start, end] => (
+                    start
+                        .parse()
+                        .unwrap_or_else(|_| panic!("Can't parse start {start}")),
+                    end.parse()
+                        .unwrap_or_else(|_| panic!("Can't parse end {end}")),
+                ),
+                _ => panic!(),
             };
             start..=end
         })
@@ -52,8 +69,6 @@ fn is_invalid2(number: usize) -> bool {
     let number = numberx.as_slice();
     info!("{number:?}");
 
-
-
     for length in 1..(number.len()) {
         let mut chunks = number.chunks(length).collect::<Vec<_>>();
         chunks.sort_unstable();
@@ -61,7 +76,7 @@ fn is_invalid2(number: usize) -> bool {
         info!("\tchunks: {chunks:?}");
         if chunks.len() == 1 {
             info!("\t\tinvalid!");
-            return true
+            return true;
         }
     }
     info!("sadly valid");
@@ -70,8 +85,8 @@ fn is_invalid2(number: usize) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use tracing_subscriber::filter::LevelFilter;
     use super::*;
+    use tracing_subscriber::filter::LevelFilter;
     #[test]
     fn verify_part1() {
         let _ = tracing_subscriber::fmt()
@@ -96,11 +111,11 @@ mod tests {
             .with_max_level(tracing::Level::INFO)
             .try_init();
 
-
-        let result = part1(r#"11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124"#);
+        let result = part1(
+            r#"11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124"#,
+        );
 
         assert_eq!(result, 1227775554);
-
     }
 
     #[test]
@@ -118,7 +133,6 @@ mod tests {
         assert_eq!(is_invalid2(2121212121), true);
         assert_eq!(is_invalid2(565656), true);
         assert_eq!(is_invalid2(38593859), true);
-
 
         let result = part2(
             r#"11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124"#,
