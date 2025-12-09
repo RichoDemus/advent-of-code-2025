@@ -1,6 +1,5 @@
 use aoc_runner_derive::aoc;
 use num_bigint::BigUint;
-use tracing::info;
 
 #[aoc(day3, part1)]
 fn part1(input: &str) -> usize {
@@ -22,12 +21,10 @@ fn calc_max_voltage(bank: &str) -> usize {
 #[aoc(day3, part2)]
 fn part2(input: &str) -> BigUint {
     let mut result = BigUint::ZERO;
-    for (i, bank) in input.lines().enumerate() {
+    for bank in input.lines() {
         result += calc_max_voltage_part2(bank);
-        info!("Bank {i} done");
     }
 
-    info!("Result: {result}");
     result
 }
 
@@ -41,25 +38,17 @@ fn calc_max_voltage_part2(bank: &str) -> BigUint {
 }
 
 fn highest_rec(bank: &[u32], acc: BigUint, index: usize) -> Option<BigUint> {
-    info!(
-        "{bank:?}: acc: {acc} ({}), index: {index}",
-        acc.to_string().len()
-    );
-
     if acc.to_string().len() > 11 {
         return Some(acc);
     }
     //seek the leftmost highest number
     for number in (1..=9).rev() {
-        info!("\tlooking for {number}");
         for j in (index)..bank.len() {
             if bank[j] == number {
                 // found target number
-                info!("\tfound {} at {j}", bank[j]);
                 let mut new_acc = acc.clone();
                 new_acc *= 10u8;
                 new_acc += bank[j];
-                info!("acc is now {acc}");
                 let candidate = highest_rec(bank, new_acc, j + 1);
                 if candidate.is_some() {
                     return candidate;
@@ -67,7 +56,6 @@ fn highest_rec(bank: &[u32], acc: BigUint, index: usize) -> Option<BigUint> {
             }
         }
     }
-    info!("dead track");
     None
 }
 
@@ -75,30 +63,20 @@ fn highest_rec(bank: &[u32], acc: BigUint, index: usize) -> Option<BigUint> {
 mod tests {
     use super::*;
     use std::str::FromStr;
-    use tracing_subscriber::filter::LevelFilter;
     #[test]
     fn verify_part1() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(LevelFilter::OFF)
-            .try_init();
         let input = include_str!("../input/2025/day3.txt");
         assert_eq!(part1(input), 17034);
     }
 
     #[test]
     fn verify_part2() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(LevelFilter::OFF)
-            .try_init();
         let input = include_str!("../input/2025/day3.txt");
         assert_eq!(part2(input), BigUint::from_str("168798209663590").unwrap());
     }
 
     #[test]
     fn part1_provided_example() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(tracing::Level::INFO)
-            .try_init();
         let result = part1(
             r#"987654321111111
 811111111111119
@@ -111,10 +89,6 @@ mod tests {
 
     #[test]
     fn part2_provided_example() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(tracing::Level::INFO)
-            .try_init();
-
         assert_eq!(
             part2("987654321111111"),
             BigUint::from_str("987654321111").unwrap()

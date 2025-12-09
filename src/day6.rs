@@ -7,8 +7,6 @@ fn part1(input: &str) -> usize {
         .map(|line| line.split_ascii_whitespace().collect::<Vec<_>>())
         .collect::<Vec<_>>();
 
-    println!("Parsed: {parsed:?}");
-
     let problems = parsed[0].len();
     let operator_position = parsed.len() - 1;
 
@@ -22,7 +20,6 @@ fn part1(input: &str) -> usize {
                 let third = parsed[2][problem].parse::<usize>().unwrap();
                 let fourth = parsed[3][problem].parse::<usize>().unwrap();
                 let result = first + second + third + fourth;
-                println!("solving {first} + {second} + {third} + {fourth} = {result}");
                 answer += result;
             }
             "*" => {
@@ -31,7 +28,6 @@ fn part1(input: &str) -> usize {
                 let third = parsed[2][problem].parse::<usize>().unwrap();
                 let fourth = parsed[3][problem].parse::<usize>().unwrap();
                 let result = first * second * third * fourth;
-                println!("solving {first} * {second} * {third} * {fourth} = {result}");
                 answer += result;
             }
             _ => todo!(
@@ -57,7 +53,6 @@ fn part2(input: &str) -> usize {
             break;
         }
         let operator = parsed.last().unwrap()[i];
-        println!("Operator is {operator}");
         let (next_operator, _) = parsed
             .last()
             .unwrap()
@@ -67,7 +62,6 @@ fn part2(input: &str) -> usize {
             .find(|(_, maybe_operator)| **maybe_operator == '+' || **maybe_operator == '*')
             .unwrap_or_else(|| (parsed.last().unwrap().len() + 1, &' '));
         let next_operator = next_operator - 1;
-        println!("Next operator is at {next_operator}");
         let numbers = (i..next_operator)
             .rev()
             .map(|column| {
@@ -79,13 +73,11 @@ fn part2(input: &str) -> usize {
                     .unwrap_or_else(|_| panic!("unable to parse '{tmp}'"))
             })
             .collect::<Vec<_>>();
-        println!("numbers {numbers:?}");
         let res = match operator {
             '+' => numbers.iter().sum::<usize>(),
             '*' => numbers.iter().product::<usize>(),
             _ => todo!(),
         };
-        println!("numbers: {numbers:?} {operator} = {res}");
         result += res;
         i = next_operator + 1;
     }
@@ -96,21 +88,14 @@ fn part2(input: &str) -> usize {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tracing_subscriber::filter::LevelFilter;
     #[test]
     fn verify_part1() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(LevelFilter::OFF)
-            .try_init();
         let input = include_str!("../input/2025/day6.txt");
         assert_eq!(part1(input), 4412382293768);
     }
 
     #[test]
     fn verify_part2() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(LevelFilter::OFF)
-            .try_init();
         let input = include_str!("../input/2025/day6.txt");
         assert_eq!(part2(input), 7858808482092);
     }
@@ -130,9 +115,6 @@ mod tests {
 
     #[test]
     fn part2_provided_example() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(tracing::Level::INFO)
-            .try_init();
         let result = part2(
             r#"123 328  51 64
  45 64  387 23

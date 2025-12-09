@@ -1,6 +1,5 @@
 use aoc_runner_derive::aoc;
 use std::collections::VecDeque;
-use tracing::info;
 
 type Start = usize;
 type End = usize;
@@ -63,16 +62,13 @@ fn part2(input: &str) -> usize {
     let mut ranges = parse_ranges(ranges);
 
     ranges.sort_by_key(|range| range.0);
-    info!("Ranges: {ranges:?}");
     let mut ranges = VecDeque::from(ranges);
 
     let mut new_ranges = VecDeque::new();
 
     loop {
-        info!("Loop: {ranges:?}");
         let mut did_change = false;
         'next: loop {
-            info!("\t{new_ranges:?} | {ranges:?}");
             if ranges.len() < 2 {
                 let mut temp = ranges.clone();
                 ranges.clone_from(&new_ranges);
@@ -97,7 +93,6 @@ fn part2(input: &str) -> usize {
             break;
         }
     }
-    info!("Done: {ranges:?}");
     let mut sum = 0;
     for Range(start, end) in &ranges {
         sum += end - start + 1;
@@ -108,30 +103,20 @@ fn part2(input: &str) -> usize {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tracing_subscriber::filter::LevelFilter;
     #[test]
     fn verify_part1() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(LevelFilter::OFF)
-            .try_init();
         let input = include_str!("../input/2025/day5.txt");
         assert_eq!(part1(input), 567);
     }
 
     #[test]
     fn verify_part2() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(LevelFilter::OFF)
-            .try_init();
         let input = include_str!("../input/2025/day5.txt");
         assert_eq!(part2(input), 354149806372909);
     }
 
     #[test]
     fn part1_provided_example() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(tracing::Level::INFO)
-            .try_init();
         let result = part1(
             r#"3-5
 10-14
@@ -151,9 +136,6 @@ mod tests {
 
     #[test]
     fn part2_provided_example() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(tracing::Level::INFO)
-            .try_init();
         let result = part2(
             r#"3-5
 10-14

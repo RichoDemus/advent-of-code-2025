@@ -125,30 +125,20 @@ fn part2(input: &str) -> usize {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tracing_subscriber::filter::LevelFilter;
     #[test]
     fn verify_part1() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(LevelFilter::OFF)
-            .try_init();
         let input = include_str!("../input/2025/day4.txt");
         assert_eq!(part1(input), 1367);
     }
 
     #[test]
     fn verify_part2() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(LevelFilter::OFF)
-            .try_init();
         let input = include_str!("../input/2025/day4.txt");
         assert_eq!(part2(input), 9144);
     }
 
     #[test]
     fn part1_provided_example() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(tracing::Level::INFO)
-            .try_init();
         let result = part1(
             r#"..@@.@@@@.
 @@@.@.@.@@
@@ -167,9 +157,6 @@ mod tests {
 
     #[test]
     fn part2_provided_example() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(tracing::Level::INFO)
-            .try_init();
         let result = part2(
             r#"..@@.@@@@.
 @@@.@.@.@@

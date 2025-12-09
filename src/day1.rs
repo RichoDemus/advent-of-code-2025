@@ -1,16 +1,12 @@
 use aoc_runner_derive::aoc;
-use tracing::info;
 
 #[aoc(day1, part1)]
 fn part1(input: &str) -> usize {
     let mut zeroes = 0;
     let mut dial = 50;
     for operation in input.lines() {
-        let dial_orig = dial;
         dial = move_dial(dial, operation);
-        info!("{dial_orig} => {operation} => {dial}");
         if dial == 0 {
-            info!("\tZero!");
             zeroes += 1;
         }
     }
@@ -19,7 +15,6 @@ fn part1(input: &str) -> usize {
 }
 
 fn move_dial(mut dial: i32, operation: &str) -> i32 {
-    info!("\t{dial}, {operation}");
     let (direction, steps) = operation.split_at(1);
     let steps = steps
         .parse::<i32>()
@@ -43,7 +38,6 @@ fn part2(input: &str) -> usize {
     let mut zeroes = 0;
     let mut dial = 50;
     for operation in input.lines() {
-        let dial_orig = dial;
         let (direction, steps) = operation.split_at(1);
         let mut steps = steps
             .parse::<i32>()
@@ -66,7 +60,6 @@ fn part2(input: &str) -> usize {
                 zeroes += 1;
             }
         }
-        info!("{dial_orig} => {operation} => {dial}");
     }
     zeroes
 }
@@ -74,13 +67,9 @@ fn part2(input: &str) -> usize {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tracing_subscriber::filter::LevelFilter;
 
     #[test]
     fn verify_part1() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(LevelFilter::OFF)
-            .try_init();
         let input = include_str!("../input/2025/day1.txt");
         assert_ne!(part1(input), 482);
         assert_eq!(part1(input), 1086);
@@ -88,18 +77,12 @@ mod tests {
 
     #[test]
     fn verify_part2() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(LevelFilter::OFF)
-            .try_init();
         let input = include_str!("../input/2025/day1.txt");
         assert_eq!(part2(input), 6268);
     }
 
     #[test]
     fn part1_provided_example() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(tracing::Level::INFO)
-            .try_init();
         let result = part1(
             r#"L68
 L30
@@ -118,9 +101,6 @@ L82"#,
 
     #[test]
     fn test_part1_edge_cases() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(tracing::Level::INFO)
-            .try_init();
         assert_eq!(move_dial(99, "R1"), 0);
         assert_eq!(move_dial(98, "R1"), 99);
         assert_eq!(move_dial(1, "L1"), 0);
@@ -135,9 +115,6 @@ L82"#,
 
     #[test]
     fn part2_provided_example() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(tracing::Level::INFO)
-            .try_init();
         let result = part2(
             r#"L68
 L30

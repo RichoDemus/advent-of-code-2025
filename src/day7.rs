@@ -116,30 +116,20 @@ fn calc_number_of_paths(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use tracing_subscriber::filter::LevelFilter;
     #[test]
     fn verify_part1() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(LevelFilter::OFF)
-            .try_init();
         let input = include_str!("../input/2025/day7.txt");
         assert_eq!(part1(input), 1539);
     }
 
     #[test]
     fn verify_part2() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(LevelFilter::OFF)
-            .try_init();
         let input = include_str!("../input/2025/day7.txt");
         assert_eq!(part2(input), 6479180385864);
     }
 
     #[test]
     fn part1_provided_example() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(tracing::Level::INFO)
-            .try_init();
         let result = part1(
             r#".......S.......
 ...............
@@ -164,9 +154,6 @@ mod tests {
 
     #[test]
     fn part2_provided_example() {
-        let _ = tracing_subscriber::fmt()
-            .with_max_level(tracing::Level::INFO)
-            .try_init();
         let result = part2(
             r#".......S.......
 ...............
