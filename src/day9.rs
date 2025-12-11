@@ -80,6 +80,7 @@ fn part2(input: &str) -> i64 {
     solve_part2(input, 100_000)
 }
 
+#[allow(clippy::too_many_lines)]
 fn solve_part2(input: &str, skips: usize) -> i64 {
     let mut corners = input
         .lines()
