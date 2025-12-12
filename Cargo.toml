@@ -10,13 +10,14 @@ keywords = ["aoc","advent-of-code"]
 categories = ["games"]
 
 [dependencies]
-aoc-runner = "0.3"
-aoc-runner-derive = "0.3"
+aoc-runner = { version = "0.3" , path = "../../cargo-aoc/aoc-runner"}
+aoc-runner-derive = { version = "0.3" , path = "../../cargo-aoc/aoc-runner-derive"}
 itertools = "0.14"
 num-bigint = "0.4.6"
 #log = "0.4.29"
 #dashmap = "7.0.0-rc2"
 #pathfinding = "4.14.0"
+
 
 #parse-display = "0.10"
 #anyhow = "1.0.75"
